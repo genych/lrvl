@@ -25,6 +25,7 @@ services:
       - db
     environment:
       - XDEBUG_MODE=debug,profile
+      - APP_ENV=local
     restart: on-failure
 
   nginx:
