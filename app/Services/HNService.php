@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Story;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -9,7 +10,7 @@ use Psr\Log\LoggerInterface;
 
 class HNService
 {
-    const PAGE_SIZE = 3;
+    const PAGE_SIZE = 30;
 
     public function __construct(
         private \GuzzleHttp\ClientInterface $client,
@@ -57,10 +58,22 @@ class HNService
     public function updateFeed(): void
     {
         $feed = $this->fetchFeed();
-        foreach ($feed as $item) {
-            $x = $this->fetchStory($item);
-            var_dump($item, $x);
+        $wannabeModels = [];
+        foreach ($feed as $hnId) {
+            $s = $this->fetchStory($hnId);
+            if ($s === null) {
+                continue;
+            }
+            $wannabeModels[] = [
+                'hn_id' => $s['id'],
+                'title' => $s['title'],
+                'url' => $s['url'] ?? null,
+                'points' => $s['score'],
+                'created_at' => new \DateTimeImmutable('@'.$s['time']),
+            ];
         }
+
+        Story::upsert($wannabeModels, ['hn_id'], ['points']);
     }
     
     private function fetchRaw(string $path): array
