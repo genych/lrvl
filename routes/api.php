@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\FeedController;
+use App\Models\Story;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//todo: authentication
+//Route::middleware('auth:sanctum')->group(fn() => [
+//    Route::get('/feed', fn(FeedController $c) => $c->list()),
+//    Route::delete('/delete/{story}', fn(FeedController $c, Story $story) => $c->del($story)),
+//]);
+
+Route::get('/feed', fn(FeedController $fc) => $fc->list());
+Route::delete('/delete/{story}', fn(FeedController $c, Story $story) => $c->del($story));
+//Route::post('/login', fn(UserController $uc, Request $r) => $uc->login($r));
