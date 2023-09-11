@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FeedController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('feed');
-});
+Route::get('/', fn(FeedController $fc, Request $r) => $fc->view($r));

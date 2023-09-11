@@ -15,12 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//todo: authentication
-//Route::middleware('auth:sanctum')->group(fn() => [
-//    Route::get('/feed', fn(FeedController $c) => $c->list()),
-//    Route::delete('/delete/{story}', fn(FeedController $c, Story $story) => $c->del($story)),
-//]);
-
-Route::get('/feed', fn(FeedController $fc) => $fc->list());
-Route::delete('/delete/{story}', fn(FeedController $c, Story $story) => $c->del($story));
-//Route::post('/login', fn(UserController $uc, Request $r) => $uc->login($r));
+Route::delete('/story/{story}', fn(FeedController $fc, Story $story) => $fc->del($story));

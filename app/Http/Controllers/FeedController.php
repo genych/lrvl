@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Story;
+use Illuminate\Http\Request;
 
 class FeedController extends Controller
 {
-    public function list()
+    public function view(Request $request)
     {
-        return Story::orderBy('hn_id', 'desc')->paginate(20);
+        $page = $request->query('page');
+        $feed = Story::orderBy('hn_id', 'desc')
+            ->paginate(10, ['*'], 'page', $page);
+        return view('feed', ['feed' => $feed]);
     }
 
     public function del(Story $story)
