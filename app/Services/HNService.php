@@ -60,10 +60,16 @@ class HNService
         $feed = $this->fetchFeed();
         $wannabeModels = [];
         foreach ($feed as $hnId) {
+            $trashed = Story::onlyTrashed()->where('hn_id', $hnId)->first();
+            if ($trashed) {
+                continue;
+            }
+
             $s = $this->fetchStory($hnId);
             if ($s === null) {
                 continue;
             }
+
             $wannabeModels[] = [
                 'hn_id' => $s['id'],
                 'title' => $s['title'],
