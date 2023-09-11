@@ -18,9 +18,7 @@ services:
     volumes:
       - .:/www
     working_dir: /www
-    command: >
-      sh -c "php-fpm"
-#      sh -c "composer install && bin/console doctrine:migrations:migrate --allow-no-migration && bin/console doctrine:fixture:load --no-interaction && php-fpm"
+    command: sh start.sh
     depends_on:
       - db
     environment:
