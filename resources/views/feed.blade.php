@@ -9,9 +9,19 @@
                 method: "DELETE",
             }).then(_ => document.getElementById(id).style.textDecoration='line-through');
         }
+        function logout() {
+            fetch(`/api/logout`, {
+                method: "POST",
+            }).then(_ => window.location.href='/');
+        }
     </script>
 </head>
 <body>
+@auth
+<div> Hello {{ Auth::user()->name }} </div>
+<button onclick="logout()">Logout</button>
+@endauth
+
 <div class="container mt-5">
     <table class="table table-bordered mb-5">
         <thead>
