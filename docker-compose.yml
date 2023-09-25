@@ -13,8 +13,6 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     image: ghcr.io/genych/php82:latest
-    ports:
-      - "9000"
     volumes:
       - .:/www
     working_dir: /www
@@ -30,6 +28,8 @@ services:
     build:
       context: .docker
       dockerfile: nginx.Dockerfile
+    volumes:
+      - ./public:/www/public
     ports:
       - "80:80"
       - "443:443"
